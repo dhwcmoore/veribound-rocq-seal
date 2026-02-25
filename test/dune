@@ -1,0 +1,17 @@
+(executables
+ (names
+   demonstration_1
+   demonstration_2
+   demonstration_3
+   test_verifier
+   test_verifier_tampered
+   hash_seal_core_test)
+ (modules
+   Demonstration_1
+   Demonstration_2
+   Demonstration_3
+   Test_verifier
+   test_verifier_tampered
+   hash_seal_core_test)
+ (libraries verifier yojson digestif veribound-core.irrational_seal)
+ (flags (:standard -w -27 -w -33)))

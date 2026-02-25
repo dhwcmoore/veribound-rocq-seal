@@ -1,0 +1,13 @@
+_build/
+*.swp
+*.swo
+*~
+.DS_Store
+*.exe
+*.cmo
+*.cmx
+*.o
+*.a
+.merlin
+.bsb.json
+node_modules/

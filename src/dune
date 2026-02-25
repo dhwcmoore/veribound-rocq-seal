@@ -1,0 +1,5 @@
+(library
+ (name veribound_core)
+ (public_name veribound-core)
+ (modules)
+ (libraries yojson))
