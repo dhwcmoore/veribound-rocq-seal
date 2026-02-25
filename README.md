@@ -1,85 +1,119 @@
 # VeriBound Rocq Seal
 
-This repository contains a small, buildable slice of VeriBound focused on audit-grade trace integrity:
+A Rocq or Coq plus OCaml implementation demonstrating formal artefacts, extraction, and audit-grade trace integrity via deterministic sealing and verification.
 
-- Rocq or Coq proof artefacts and extraction sources (Flocq-based work)
-- OCaml implementation of sealing and verification
-- a demonstrable tamper check workflow
+The repository is intentionally narrow and buildable. It exposes a minimal verification core together with explicit seal and tamper-detection logic.
 
-The scope here is narrow on purpose. It is intended to be reviewed and built.
+---
 
-## What this demonstrates
+## Scope
 
-### 1. Formal verification artefacts
-The `proofs/` folder contains Rocq or Coq sources supporting an extracted classification core (Flocq-based), along with extracted OCaml artefacts.
+This repository contains two coupled layers:
 
-### 2. Seal generation with an irrational marker
-The sealing layer generates an "irrational marker" derived from the trace, intended as an audit-visible integrity token.
+1. Proof and extraction artefacts (Rocq or Coq, Flocq-based)
+2. OCaml implementation of seal construction and verification
 
-### 3. Hash-based seal and verifier
-A second seal mechanism uses a hash-derived seal and includes a verifier that detects tampering.
+All behaviour is deterministic and reproducible.
+
+---
+
+## Components
+
+### Formal artefacts
+
+The `proofs/` directory contains Rocq or Coq sources supporting an extracted computational core. Extracted OCaml artefacts are included where applicable.
+
+The formal layer is limited in scope and intended as a verification-bearing kernel rather than a full specification system.
+
+---
+
+### Seal construction
+
+Two seal mechanisms are implemented:
+
+* An irrational-marker seal derived deterministically from the verification trace
+* A hash-derived seal suitable for recomputation and comparison
+
+Both are explicit transformations over structured data.
+
+---
+
+### Verification
+
+A verifier recomputes seal values and rejects modified artefacts.
+
+The intent is to demonstrate:
+
+* trace integrity
+* recomputability
+* tamper detection under ordinary modification
+
+---
 
 ## Repository layout
 
-- `src/`  
-  OCaml implementation: sealing, verification, and integration code.
+* `src/`
+  OCaml implementation of sealing, verification, and integration logic.
 
-- `proofs/flocq_engine/`  
-  Rocq or Coq sources and extraction artefacts related to Flocq.
+* `proofs/flocq_engine/`
+  Rocq or Coq sources and related extraction artefacts.
 
-- `test/`  
-  OCaml tests for the seal and verifier logic.
+* `test/`
+  Unit and integration tests for seal and verification logic.
 
-- `examples/`  
-  Minimal example JSON files and a short walkthrough.
+* `examples/`
+  Minimal JSON artefacts illustrating sealing and tamper detection.
 
-- `docs/`  
-  Architecture notes and a simple threat model.
+* `docs/`
+  Architecture notes and a minimal threat model.
 
-## Quick start
+---
 
-### Prerequisites
-You will need:
-- OCaml toolchain
-- Dune
-- (optional) Rocq or Coq if you want to rebuild proof artefacts
+## Build
 
-### Build
+Prerequisites:
+
+* OCaml toolchain
+* Dune
+* Optional: Rocq or Coq for rebuilding proof artefacts
+
 From the repository root:
 
-1. Build:
-   - `dune build`
+```
+dune build
+dune runtest
+```
 
-2. Run tests:
-   - `dune runtest`
+---
 
-If your environment uses opam, install dependencies as you normally would for a dune project.
+## Tamper demonstration
 
-## Tamper check demo
+The `examples/` folder contains:
 
-See `examples/README.md`.
+* `input.json`
+* `sealed.json`
+* `tampered.json`
 
-The demo uses three files:
-- `input.json` (original)
-- `sealed.json` (after sealing)
-- `tampered.json` (a deliberately modified version)
+Expected behaviour:
 
-The verifier should accept `sealed.json` and reject `tampered.json`.
+* Verifier accepts `sealed.json`
+* Verifier rejects `tampered.json`
+
+---
 
 ## Non-goals
 
-This repository is not:
-- a complete product release
-- a full regulatory template system
-- a production hardening effort
+This repository does not attempt to provide:
 
-It is a coherent, buildable demonstration of formal artefacts plus seal and verification logic.
+* Key management
+* Production hardening
+* Regulatory template completeness
+* Secure deployment guarantees
 
-## Contact
+It demonstrates a deterministic verification trace coupled to explicit integrity markers.
 
-Duston Moore, PhD  
-Email: dhwcmoore@gmail.com
+---
 
 ## Licence
 
-MIT, see `LICENSE`.
+MIT
